@@ -4,11 +4,14 @@ body {
 
 #game_grid {
   border: 2px tomato solid;
-  width: 600px;
-  height: 400px;
+  width: fit-content;
+  min-width: 400px;
+  height: auto;
+  min-height: 300px;
   margin: auto;
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
 }
 
 

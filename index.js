@@ -1,8 +1,65 @@
+
+// Generate cards for grid:
+async function generatePokemonCards(numPairs) {
+  const response = await fetch(
+    `https://pokeapi.co/api/v2/pokemon?limit=${numPairs}`
+  );
+  const data = await response.json();
+  const pokemonList = data.results;
+
+  const cardContainer = document.getElementById("game_grid");
+  cardContainer.innerHTML = "";
+
+  const uniquePokemons = [];
+
+  for (let i = 0; i < numPairs; i++) {
+    const pokemon = pokemonList[i];
+    uniquePokemons.push(pokemon, pokemon);
+  }
+
+  shuffleArray(uniquePokemons);
+
+  uniquePokemons.forEach((pokemon, index) => {
+    const card = document.createElement("div");
+    card.classList.add("card");
+
+    const frontFace = document.createElement("img");
+    frontFace.classList.add("front_face");
+    frontFace.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${
+      index + 1
+    }.png`;
+    frontFace.alt = "";
+
+    const backFace = document.createElement("img");
+    backFace.classList.add("back_face");
+    backFace.src = "back.webp";
+    backFace.alt = "";
+
+    card.appendChild(frontFace);
+    card.appendChild(backFace);
+    cardContainer.appendChild(card);
+  });
+}
+
+// Fisher-Yates shuffle algorithm
+function shuffleArray(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+}
+
+// Usage: generatePokemonCards(4);
+
 const setup = () => {
+
+  generatePokemonCards(4);
+
   let firstCard = null;
   let secondCard = null;
   let isProcessing = false;
 
+  // game play event listener
   $(document).on("click", ".card", function () {
     if (isProcessing) {
       return;
