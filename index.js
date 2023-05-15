@@ -10,6 +10,21 @@ async function generatePokemonCards(numPairs) {
   const cardContainer = document.getElementById("game_grid");
   cardContainer.innerHTML = "";
 
+  let numRows, numColumns;
+
+  if (numPairs % 4 === 0) {
+    numRows = numPairs / 4;
+    numColumns = 4;
+  } else if (numPairs % 3 === 0) {
+    numRows = numPairs / 3;
+    numColumns = 3;
+  } else {
+    numRows = Math.ceil(numPairs / 3);
+    numColumns = 3;
+  }
+
+  cardContainer.style.gridTemplateColumns = `repeat(${numColumns}, 1fr)`; // Update the grid template columns in CSS
+
   const uniquePokemons = [];
 
   for (let i = 0; i < numPairs; i++) {
@@ -53,7 +68,7 @@ function shuffleArray(array) {
 
 const setup = () => {
 
-  generatePokemonCards(4);
+  generatePokemonCards(6);
 
   let firstCard = null;
   let secondCard = null;
