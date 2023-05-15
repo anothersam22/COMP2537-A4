@@ -1,34 +1,33 @@
-
-
-
 const setup = () => {
-  let firstCard = undefined
-  let secondCard = undefined
-  $(".card").on(("click"), function () {
+  let firstCard = undefined;
+  let secondCard = undefined;
+
+  $(".card").on("click", function () {
     $(this).toggleClass("flip");
 
-    if (!firstCard)
-      firstCard = $(this).find(".front_face")[0]
-    else {
-      secondCard = $(this).find(".front_face")[0]
+    if (!firstCard) {
+      firstCard = $(this).find(".front_face")[0];
+    } else {
+      secondCard = $(this).find(".front_face")[0];
       console.log(firstCard, secondCard);
-      if (
-        firstCard.src
-        ==
-        secondCard.src
-      ) {
-        console.log("match")
-        $(`#${firstCard.id}`).parent().off("click")
-        $(`#${secondCard.id}`).parent().off("click")
+      if (firstCard.src === secondCard.src) {
+        console.log("match");
+        $("#match-message").text("Match!"); // Print "Match!" to an element with id "match-message"
+        $(`#${firstCard.id}`).parent().off("click");
+        $(`#${secondCard.id}`).parent().off("click");
       } else {
-        console.log("no match")
+        console.log("no match");
         setTimeout(() => {
-          $(`#${firstCard.id}`).parent().toggleClass("flip")
-          $(`#${secondCard.id}`).parent().toggleClass("flip")
-        }, 1000)
+          $(`#${firstCard.id}`).parent().toggleClass("flip");
+          $(`#${secondCard.id}`).parent().toggleClass("flip");
+        }, 1000);
       }
+
+      // Reset variables for the next pair of cards
+      firstCard = undefined;
+      secondCard = undefined;
     }
   });
-}
+};
 
-$(document).ready(setup)
+$(document).ready(setup);
