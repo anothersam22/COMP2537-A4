@@ -18,11 +18,12 @@ body {
 
 
 .card {
-  width: 33.3%;
+  width: 80%;
   position: relative;
   transition: transform 1s;
   perspective: 1000px;
   transform-style: preserve-3d;
+  
 }
 
 
