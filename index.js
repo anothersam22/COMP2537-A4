@@ -1,9 +1,7 @@
 
 // Generate cards for grid:
 async function generatePokemonCards(numPairs) {
-  const response = await fetch(
-    `https://pokeapi.co/api/v2/pokemon?limit=${numPairs}`
-  );
+  const response = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=${numPairs}`);
   const data = await response.json();
   const pokemonList = data.results;
 
@@ -28,8 +26,9 @@ async function generatePokemonCards(numPairs) {
   const uniquePokemons = [];
 
   for (let i = 0; i < numPairs; i++) {
-    const pokemon = pokemonList[i];
-    uniquePokemons.push(pokemon, pokemon);
+    const pokemon1 = pokemonList[i];
+    const pokemon2 = pokemonList[numPairs - 1 - i];
+    uniquePokemons.push(pokemon1, pokemon2);
   }
 
   shuffleArray(uniquePokemons);
@@ -41,7 +40,7 @@ async function generatePokemonCards(numPairs) {
     const frontFace = document.createElement("img");
     frontFace.classList.add("front_face");
     frontFace.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${
-      index + 1
+      pokemonList.indexOf(pokemon) + 1
     }.png`;
     frontFace.alt = "";
 
@@ -55,6 +54,8 @@ async function generatePokemonCards(numPairs) {
     cardContainer.appendChild(card);
   });
 }
+
+// Rest of the code remains the same
 
 // Fisher-Yates shuffle algorithm
 function shuffleArray(array) {
@@ -76,43 +77,42 @@ const setup = () => {
 
   // game play event listener
   $(document).on("click", ".card", function () {
-    if (isProcessing) {
-      return;
+  if (isProcessing) {
+    return;
+  }
+
+  $(this).toggleClass("flip");
+
+  const currentCard = $(this).find(".front_face")[0];
+
+  if (!firstCard) {
+    firstCard = currentCard;
+  } else if (firstCard !== currentCard) {
+    secondCard = currentCard;
+    isProcessing = true;
+
+    if (firstCard.src === secondCard.src) {
+      console.log("match");
+      $("#match-message").text("Match!");
+      $(this).off("click");
+      $(firstCard).parent().off("click");
+      isProcessing = false;
+      firstCard = null;
+      secondCard = null;
+    } else {
+      console.log("no match");
+      $("#match-message").text("No Match!");
+      setTimeout(() => {
+        if (firstCard && secondCard) {
+          $(this).toggleClass("flip");
+          $(firstCard).parent().toggleClass("flip");
+          isProcessing = false;
+          firstCard = null;
+          secondCard = null;
+        }
+      }, 1000);
     }
-
-    $(this).toggleClass("flip");
-
-    const currentCard = $(this).find(".front_face")[0];
-
-    if (!firstCard) {
-      firstCard = currentCard;
-    } else if (firstCard !== currentCard) {
-      secondCard = currentCard;
-      isProcessing = true;
-
-      if (firstCard.src === secondCard.src) {
-        console.log("match");
-        $("#match-message").text("Match!");
-        $(`#${firstCard.id}`).parent().off("click");
-        $(`#${secondCard.id}`).parent().off("click");
-        isProcessing = false;
-        firstCard = null;
-        secondCard = null;
-      } else {
-        console.log("no match");
-        $("#match-message").text("No Match!");
-        setTimeout(() => {
-          if (firstCard && secondCard) {
-            $(`#${firstCard.id}`).parent().toggleClass("flip");
-            $(`#${secondCard.id}`).parent().toggleClass("flip");
-            isProcessing = false;
-            firstCard = null;
-            secondCard = null;
-          }
-        }, 1000);
-      }
-    }
-  });
-};
-
+  }
+});
+}
 $(document).ready(setup);
