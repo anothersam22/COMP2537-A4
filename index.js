@@ -1,7 +1,8 @@
-
 // Generate cards for grid:
 async function generatePokemonCards(numPairs) {
-  const response = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=${numPairs}`);
+  const response = await fetch(
+    `https://pokeapi.co/api/v2/pokemon?limit=${numPairs}`
+  );
   const data = await response.json();
   const pokemonList = data.results;
 
@@ -65,54 +66,60 @@ function shuffleArray(array) {
   }
 }
 
-// Usage: generatePokemonCards(4);
+// game play function
+async function gamePlay(isProcessing, firstCard, secondCard) {}
 
 const setup = () => {
-
-  generatePokemonCards(6);
+  generatePokemonCards(12);
 
   let firstCard = null;
   let secondCard = null;
   let isProcessing = false;
+  let clickCount = 0;
 
   // game play event listener
   $(document).on("click", ".card", function () {
-  if (isProcessing) {
-    return;
-  }
+    //add click count
+    clickCount++;
+    // display click count
+    $("#clicks").text(clickCount);
 
-  $(this).toggleClass("flip");
-
-  const currentCard = $(this).find(".front_face")[0];
-
-  if (!firstCard) {
-    firstCard = currentCard;
-  } else if (firstCard !== currentCard) {
-    secondCard = currentCard;
-    isProcessing = true;
-
-    if (firstCard.src === secondCard.src) {
-      console.log("match");
-      $("#match-message").text("Match!");
-      $(this).off("click");
-      $(firstCard).parent().off("click");
-      isProcessing = false;
-      firstCard = null;
-      secondCard = null;
-    } else {
-      console.log("no match");
-      $("#match-message").text("No Match!");
-      setTimeout(() => {
-        if (firstCard && secondCard) {
-          $(this).toggleClass("flip");
-          $(firstCard).parent().toggleClass("flip");
-          isProcessing = false;
-          firstCard = null;
-          secondCard = null;
-        }
-      }, 1000);
+    if (isProcessing) {
+      return;
     }
-  }
-});
-}
+
+    $(this).toggleClass("flip");
+
+    const currentCard = $(this).find(".front_face")[0];
+
+    if (!firstCard) {
+      firstCard = currentCard;
+    } else if (firstCard !== currentCard) {
+      secondCard = currentCard;
+      isProcessing = true;
+
+      if (firstCard.src === secondCard.src) {
+        console.log("match");
+        $("#match-message").text("Match!");
+        $(this).off("click");
+        $(firstCard).parent().off("click");
+        isProcessing = false;
+        firstCard = null;
+        secondCard = null;
+      } else {
+        console.log("no match");
+        $("#match-message").text("No Match!");
+        setTimeout(() => {
+          if (firstCard && secondCard) {
+            $(this).toggleClass("flip");
+            $(firstCard).parent().toggleClass("flip");
+            isProcessing = false;
+            firstCard = null;
+            secondCard = null;
+          }
+        }, 1000);
+      }
+    }
+  });
+};
 $(document).ready(setup);
