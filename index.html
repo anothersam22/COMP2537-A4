@@ -28,12 +28,25 @@
 </head>
 
 <body>
+  <!-- The modal -->
+<div id="win-modal" class="modal">
+  <div class="modal-content">
+    <span id="close-modal" class="close">&times;</span>
+    <h2>You Win!</h2>
+    <p>Congratulations on completing the game!</p>
+  </div>
+</div>
+
   <h1>Pokemon Memory Game</h1>
-  <div id="levels"> Difficulty Level</div>
-  <div id="level">
-    <button id="easy">Easy</button>
-    <button id="medium">Medium</button>
-    <button id="hard">Hard</button>
+<div id="levels">Difficulty Level</div>
+<div id="level">
+  <button id="easy" value="easy">Easy</button>
+  <button id="medium" value="medium">Medium</button>
+  <button id="hard" value="hard">Hard</button>
+</div>
+
+
+
   <div id="game_info">
     <div id="game_timer">
       <span>Time Left: </span>

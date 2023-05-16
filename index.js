@@ -1,3 +1,30 @@
+// set difficulty level
+function setDifficulty(callback) {
+  let numberOfPairs = 0;
+  let timeLimit = 0;
+
+  $("#level button").click(function () {
+    const difficulty = $(this).val();
+
+    if (difficulty === "easy") {
+      numberOfPairs = 3;
+      timeLimit = 60;
+    } else if (difficulty === "medium") {
+      numberOfPairs = 6;
+      timeLimit = 90;
+    } else if (difficulty === "hard") {
+      numberOfPairs = 9;
+      timeLimit = 120;
+    }
+
+    // Log the updated value of numberOfPairs
+    console.log("number of pairs: ", numberOfPairs);
+
+    // Call the callback function with the updated value
+    callback(numberOfPairs);
+  });
+}
+
 // Generate cards for grid:
 async function generatePokemonCards(numPairs) {
   const response = await fetch(
@@ -56,8 +83,6 @@ async function generatePokemonCards(numPairs) {
   });
 }
 
-// Rest of the code remains the same
-
 // Fisher-Yates shuffle algorithm
 function shuffleArray(array) {
   for (let i = array.length - 1; i > 0; i--) {
@@ -66,16 +91,47 @@ function shuffleArray(array) {
   }
 }
 
-// game play function
-async function gamePlay(isProcessing, firstCard, secondCard) {}
+// // win game function
+// function winGame() {
+//   // drop down modal with win message using keyframes
+//   $("#win-modal").css("display", "block");
+//   $("#win-modal").addClass("animate__animated animate__fadeInDown");
+//   $("#win-modal").addClass("animate__animated animate__fadeOutUp");
+//   $("#win-modal").removeClass("animate__animated animate__fadeInDown");
+//   $("#win-modal").removeClass("animate__animated animate__fadeOutUp");
+//   // add click event to close modal
+//   $("#close-modal").click(function () {
+//     $("#win-modal").css("display", "none");
+//   }
+//   );
+
+// }
+
+// win game function
+function winGame() {
+  // Display the win modal
+  $("#win-modal").css("display", "block");
+
+  // Close modal when close button is clicked
+  $("#close-modal").click(function () {
+    $("#win-modal").css("display", "none");
+  });
+}
 
 const setup = () => {
-  generatePokemonCards(12);
-
   let firstCard = null;
   let secondCard = null;
   let isProcessing = false;
   let clickCount = 0;
+  let numberOfPairs = 3;
+  let timeLimit = 0;
+
+  // set difficulty level
+  setDifficulty((updatedNumberOfPairs) => {
+    numberOfPairs = updatedNumberOfPairs;
+    console.log("number of pairs in setup: ", numberOfPairs);
+    generatePokemonCards(numberOfPairs);
+  });
 
   // game play event listener
   $(document).on("click", ".card", function () {
