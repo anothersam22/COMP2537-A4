@@ -239,10 +239,9 @@ const setup = () => {
           }, 1000);
         }
       }
-      
+
       // power up function
       powerUp(clickCount);
-
 
       // update score
       $("#score").text(score);
@@ -251,29 +250,37 @@ const setup = () => {
       // display pairs matched
       $("#pairs-matched").text(pairsMatched);
 
-
-      
       // win condition
       if (pairsMatched === numberOfPairs) {
         // stop timer here and stop timer in html
         console.log("You win!");
         console.log("intervalID: ", intervalId);
-       //$("#timer").text("0:00");
+        //$("#timer").text("0:00");
         stopTimer(timeCounter);
         // clearInterval(timeCounter);
- 
+
         $("#match-message").text("You Win!");
       }
     });
   };
+
+  // Event listener for dark button
+  $("#darkButton").click(function () {
+    $("#game_grid").removeClass("light-bg").addClass("dark-bg");
+    $("#card").removeClass("light-bg").addClass("dark-bg");
+  });
+
+  // Event listener for light button
+  $("#lightButton").click(function () {
+    $("#game_grid").removeClass("dark-bg").addClass("light-bg");
+    $("#card").removeClass("dark-bg").addClass("light-bg");
+  });
 
   // reset game
   $("#reset_game").on("click", function () {
     // redirect to home page
     location.reload();
   });
-
-
 
   // Add event listener to the start button
   $("#start-button").on("click", startGame);

@@ -24,6 +24,8 @@ body {
   perspective: 1000px;
   transform-style: preserve-3d;
   
+
+  
 }
 
 
@@ -116,4 +118,14 @@ img {
 
 #game_info>div:last-child {
   margin-bottom: 0;
+}
+
+.dark-bg {
+  background-color: #333;
+  color: #fff;
+}
+
+.light-bg {
+  background-color: #f5f5f5;
+  color: #333;
 }
