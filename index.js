@@ -17,7 +17,14 @@ function startTimer(duration) {
     }
     
   }, 1000);
+  return intervalId;
+  
 
+}
+
+// stop timer function
+function stopTimer(intervalId) {
+  clearInterval(intervalId);
 }
 
 
@@ -129,7 +136,7 @@ const setup = () => {
   let timeLimit = 0;
   let pairsMatched = 0;
   let score = 0;
-  let intervalId = null; // Declare intervalId variable
+  let intervalId = "bubba"; // Declare intervalId variable
 
   // set difficulty level
   setDifficulty((updatedNumberOfPairs, updatedTimeLimit) => {
@@ -142,7 +149,7 @@ const setup = () => {
   const startGame = () => {
     // start game
     generatePokemonCards(numberOfPairs);
-    startTimer(timeLimit);
+    let timeCounter = startTimer(timeLimit);
 
     // Remove the start button
     $("#start-button").off("click").hide();
@@ -153,6 +160,11 @@ const setup = () => {
       clickCount++;
       // display click count
       $("#clicks").text(clickCount);
+
+      // check if card is already flipped or matched
+      if ($(this).hasClass("flip") || $(this).hasClass("matched")) {
+        return; // Skip further execution
+      }
 
       if (isProcessing) {
         return;
@@ -198,13 +210,16 @@ const setup = () => {
       // win condition
       if (pairsMatched === numberOfPairs) {
         // stop timer here and stop timer in html
-        $("#timer").text("0:00");
-        clearInterval(intervalId);
+        console.log("You win!");
+        console.log("intervalID: ", intervalId);
+       //$("#timer").text("0:00");
+        stopTimer(timeCounter);
+        clearInterval(timeCounter);
+ 
         $("#match-message").text("You Win!");
       }
     });
   };
-  clearInterval(intervalId);
 
   // reset game
   $("#reset_game").on("click", function () {
