@@ -133,8 +133,9 @@ const setup = () => {
   let isProcessing = false;
   let clickCount = 0;
   let numberOfPairs = 3;
-  let timeLimit = 0;
   let pairsMatched = 0;
+  let pairsLeft = 0;
+  let timeLimit = 0;
   let score = 0;
   let intervalId = "bubba"; // Declare intervalId variable
 
@@ -187,6 +188,7 @@ const setup = () => {
           $(firstCard).parent().off("click");
           score += 10;
           pairsMatched++;
+          pairsLeft = numberOfPairs - pairsMatched;
           isProcessing = false;
           firstCard = null;
           secondCard = null;
@@ -206,6 +208,11 @@ const setup = () => {
       }
       // update score
       $("#score").text(score);
+      // update pairs left
+      $("#pairs-left").text(pairsLeft);
+      // display pairs matched
+      $("#pairs-matched").text(pairsMatched);
+      
 
       // win condition
       if (pairsMatched === numberOfPairs) {
