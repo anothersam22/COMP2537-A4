@@ -30,7 +30,7 @@ function setDifficulty(callback) {
   let timeLimit = 0;
 
   $("#level button").click(function () {
-        $("#level button").removeClass("active");
+    $("#level button").removeClass("active");
     const difficulty = $(this).val();
 
     if (difficulty === "easy") {
@@ -47,6 +47,9 @@ function setDifficulty(callback) {
     // Log the updated values
     console.log("Number of pairs: ", numberOfPairs);
     console.log("Time limit: ", timeLimit);
+
+    // Add the active class to the clicked button
+    $(this).addClass("active");
 
     // Call the callback function with the updated values
     callback(numberOfPairs, timeLimit);
