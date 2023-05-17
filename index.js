@@ -1,4 +1,17 @@
 
+// power up function:  if you have clicked 10 times flip all cards for 5 seconds
+function powerUp(clickCount) {
+  // if click count is 10
+  if (clickCount === 10) {
+    // flip all cards
+    $(".card").addClass("flip");
+    // wait 5 seconds
+    setTimeout(function () {
+      // flip all cards back
+      $(".card").removeClass("flip");
+    }, 5000);
+  }
+}
 
 
 // time limit function
@@ -206,23 +219,26 @@ const setup = () => {
           }, 1000);
         }
       }
+
       // update score
       $("#score").text(score);
       // update pairs left
       $("#pairs-left").text(pairsLeft);
       // display pairs matched
       $("#pairs-matched").text(pairsMatched);
-      
+
+      // power up function
+      powerUp(clickCount);
 
       // win condition
       if (pairsMatched === numberOfPairs) {
         // stop timer here and stop timer in html
         console.log("You win!");
         console.log("intervalID: ", intervalId);
-       //$("#timer").text("0:00");
+        //$("#timer").text("0:00");
         stopTimer(timeCounter);
         clearInterval(timeCounter);
- 
+
         $("#match-message").text("You Win!");
       }
     });
