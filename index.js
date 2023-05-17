@@ -1,3 +1,29 @@
+
+
+
+// time limit function
+function startTimer(duration) {
+  let timer = duration, minutes, seconds;
+  const intervalId = setInterval(function () {
+    minutes = parseInt(timer / 60, 10);
+    seconds = parseInt(timer % 60, 10);
+    $("#timer").text(minutes + ":" + seconds);
+
+    if (--timer < 0) {
+      timer = duration;
+      clearInterval(intervalId);
+      $("#timer").text("0:00");
+      $("#match-message").text("Game Over!");
+    }
+    
+    if (pairsMatched === numberOfPairs) {
+      clearInterval(intervalId);
+      $("#match-message").text("You Win!");
+    }
+  }, 1000);
+
+}
+
 // set difficulty level
 function setDifficulty(callback) {
   let numberOfPairs = 0;
@@ -17,13 +43,15 @@ function setDifficulty(callback) {
       timeLimit = 120;
     }
 
-    // Log the updated value of numberOfPairs
-    console.log("number of pairs: ", numberOfPairs);
+    // Log the updated values
+    console.log("Number of pairs: ", numberOfPairs);
+    console.log("Time limit: ", timeLimit);
 
-    // Call the callback function with the updated value
-    callback(numberOfPairs);
+    // Call the callback function with the updated values
+    callback(numberOfPairs, timeLimit);
   });
 }
+
 
 // Generate cards for grid:
 async function generatePokemonCards(numPairs) {
@@ -91,32 +119,9 @@ function shuffleArray(array) {
   }
 }
 
-// // win game function
-// function winGame() {
-//   // drop down modal with win message using keyframes
-//   $("#win-modal").css("display", "block");
-//   $("#win-modal").addClass("animate__animated animate__fadeInDown");
-//   $("#win-modal").addClass("animate__animated animate__fadeOutUp");
-//   $("#win-modal").removeClass("animate__animated animate__fadeInDown");
-//   $("#win-modal").removeClass("animate__animated animate__fadeOutUp");
-//   // add click event to close modal
-//   $("#close-modal").click(function () {
-//     $("#win-modal").css("display", "none");
-//   }
-//   );
-
-// }
 
 // win game function
-function winGame() {
-  // Display the win modal
-  $("#win-modal").css("display", "block");
 
-  // Close modal when close button is clicked
-  $("#close-modal").click(function () {
-    $("#win-modal").css("display", "none");
-  });
-}
 
 const setup = () => {
   let firstCard = null;
@@ -125,13 +130,21 @@ const setup = () => {
   let clickCount = 0;
   let numberOfPairs = 3;
   let timeLimit = 0;
+  let pairsMatched = 0;
+  let score = 0;
+
+// event listener for start button
 
   // set difficulty level
-  setDifficulty((updatedNumberOfPairs) => {
-    numberOfPairs = updatedNumberOfPairs;
-    console.log("number of pairs in setup: ", numberOfPairs);
-    generatePokemonCards(numberOfPairs);
-  });
+setDifficulty((updatedNumberOfPairs, updatedTimeLimit) => {
+  numberOfPairs = updatedNumberOfPairs;
+  timeLimit = updatedTimeLimit;
+  console.log("Number of pairs in setup: ", numberOfPairs);
+  console.log("Time limit in setup: ", timeLimit);
+  generatePokemonCards(numberOfPairs);
+  startTimer(timeLimit);
+});
+
 
   // game play event listener
   $(document).on("click", ".card", function () {
@@ -159,6 +172,8 @@ const setup = () => {
         $("#match-message").text("Match!");
         $(this).off("click");
         $(firstCard).parent().off("click");
+        score += 10;
+        pairsMatched++;
         isProcessing = false;
         firstCard = null;
         secondCard = null;
@@ -178,4 +193,5 @@ const setup = () => {
     }
   });
 };
+
 $(document).ready(setup);
