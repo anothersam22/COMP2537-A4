@@ -1,16 +1,33 @@
 
+// // power up function:  if you have clicked 10 times flip all cards for 5 seconds
+// function powerUp(clickCount) {
+//   // if click count is 10
+//   if (clickCount === 10) {
+//     // flip all cards that are not matched
+//     $(".card").not(".matched").toggleClass("flip");
+//     // set timeout to flip cards back
+//     setTimeout(() => {
+//       $(".card").not(".matched").toggleClass("flip");
+//     }, 5000);
+//   }
+// }
+
 // power up function:  if you have clicked 10 times flip all cards for 5 seconds
 function powerUp(clickCount) {
-  // if click count is 10
-  if (clickCount === 10) {
-    // flip all cards
-    $(".card").addClass("flip");
-    // wait 5 seconds
-    setTimeout(function () {
-      // flip all cards back
-      $(".card").removeClass("flip");
-    }, 5000);
-  }
+  // Select all cards that are not matched
+  const unmatchedCards = $(".card").not(".matched");
+
+  if (clickCount == 10) {
+
+  // Flip all unmatched cards
+  unmatchedCards.toggleClass("flip");
+
+  // Set a timeout to flip the cards back
+  setTimeout(() => {
+    unmatchedCards.toggleClass("flip");
+  }, 5000);
+
+}
 }
 
 
@@ -148,7 +165,7 @@ const setup = () => {
   let numberOfPairs = 3;
   let pairsMatched = 0;
   let pairsLeft = 0;
-  let timeLimit = 0;
+  let timeLimit = 60;
   let score = 0;
   let intervalId = "bubba"; // Declare intervalId variable
 
@@ -205,6 +222,9 @@ const setup = () => {
           isProcessing = false;
           firstCard = null;
           secondCard = null;
+          // Add a "matched" class to the matched cards
+          $(this).addClass("matched");
+          $(firstCard).parent().addClass("matched");
         } else {
           console.log("no match");
           $("#match-message").text("No Match!");
@@ -219,6 +239,10 @@ const setup = () => {
           }, 1000);
         }
       }
+      
+      // power up function
+      powerUp(clickCount);
+
 
       // update score
       $("#score").text(score);
@@ -227,18 +251,17 @@ const setup = () => {
       // display pairs matched
       $("#pairs-matched").text(pairsMatched);
 
-      // power up function
-      powerUp(clickCount);
 
+      
       // win condition
       if (pairsMatched === numberOfPairs) {
         // stop timer here and stop timer in html
         console.log("You win!");
         console.log("intervalID: ", intervalId);
-        //$("#timer").text("0:00");
+       //$("#timer").text("0:00");
         stopTimer(timeCounter);
-        clearInterval(timeCounter);
-
+        // clearInterval(timeCounter);
+ 
         $("#match-message").text("You Win!");
       }
     });

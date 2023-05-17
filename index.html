@@ -28,89 +28,56 @@
 </head>
 
 <body>
-  <!-- The modal -->
-<div id="win-modal" class="modal">
-  <div class="modal-content">
-    <span id="close-modal" class="close">&times;</span>
-    <h2>You Win!</h2>
-    <p>Congratulations on completing the game!</p>
-  </div>
-</div>
-
-<h1>Pokemon MemGame</h1>
-<div id="levels">Difficulty Level</div>
-<div id="level">
+<h1 id="game_title" class="center">Pokemon MemGame</h1>
+<div id="levels" class="center">Difficulty Level</div>
+<div id="level" class="center">
   <button id="easy" value="easy" class="btn btn-primary">Easy</button>
   <button id="medium" value="medium" class="btn btn-primary">Medium</button>
   <button id="hard" value="hard" class="btn btn-primary">Hard</button>
 </div>
 
+<div id="game_info" class="center">
+  <div id="game_timer">
+    <span>Time Left: </span>
+    <span id="timer">60</span>
+  </div>
+  <div id="game_score">
+    <span>Score: </span>
+    <span id="score">0</span>
+  </div>
+  <div id="game_level">
+    <span>Level: </span>
+    <span id="level">Easy</span>
+  </div>
+  <div id="pairs_matched">
+    <span>Pairs Matched: </span>
+    <span id="pairs-matched">0</span>
+  </div>
+  <div id="pairs_left">
+    <span>Pairs Left: </span>
+    <span id="pairs-left">0</span>
+  </div>
 
-
-
-  <div id="game_info">
-    <div id="game_timer">
-      <span>Time Left: </span>
-      <span id="timer">60</span>
-    </div>
-    <div id="game_score">
-      <span>Score: </span>
-      <span id="score">0</span>
-    </div>
-    <div id="game_level">
-      <span>Level: </span>
-      <span id="level">Easy</span>
-    </div>
-    <div id="pairs_matched">
-      <span>Pairs Matched: </span>
-      <span id="pairs-matched">0</span>
-    </div>
-    <div id="pairs_left">
-      <span>Pairs Left: </span>
-      <span id="pairs-left">0</span>
-    </div>
-
-    <div id="click-coun">
-      <span>Clicks: </span>
-      <span id="clicks">0</span>
-    </div>
-    <div>
-      <button id="start-button" class="btn btn-success">Start Game</button>
-    </div>
-    <br>
+  <div id="click-count">
+    <span>Clicks: </span>
+    <span id="clicks">0</span>
+  </div>
+  <div>
+    <button id="start-button" class="btn btn-success">Start Game</button>
+  </div>
+  <br>
   <div>
     <button id="reset_game" class="btn btn-danger">Reset Game</button>
   </div>
-  <div id="match-message">
+  <br>
+  <div id="match-message" class="center"></div>
+</div>
 
-  </div>
 
 
+<br>
   <div id="game_grid">
-    <!-- <div class="card">
-      <img id="img1" class="front_face" src="001.png" alt="">
-      <img class="back_face" src="back.webp" alt="">
-    </div>
-    <div class="card">
-      <img id="img2" class="front_face" src="002.png" alt="">
-      <img class="back_face" src="back.webp" alt="">
-    </div>
-    <div class="card">
-      <img id="img3" class="front_face" src="003.png" alt="">
-      <img class="back_face" src="back.webp" alt="">
-    </div>
-    <div class="card">
-      <img id="img4" class="front_face" src="001.png" alt="">
-      <img class="back_face" src="back.webp" alt="">
-    </div>
-    <div class="card">
-      <img id="img5" class="front_face" src="002.png" alt="">
-      <img class="back_face" src="back.webp" alt="">
-    </div>
-    <div class="card">
-      <img id="img6" class="front_face" src="003.png" alt="">
-      <img class="back_face" src="back.webp" alt="">
-    </div> -->
+
   </div>
 </body>
 
