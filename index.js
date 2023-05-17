@@ -16,13 +16,10 @@ function startTimer(duration) {
       $("#match-message").text("Game Over!");
     }
     
-    if (pairsMatched === numberOfPairs) {
-      clearInterval(intervalId);
-      $("#match-message").text("You Win!");
-    }
   }, 1000);
 
 }
+
 
 // set difficulty level
 function setDifficulty(callback) {
@@ -122,6 +119,7 @@ function shuffleArray(array) {
     [array[i], array[j]] = [array[j], array[i]];
   }
 }
+
 const setup = () => {
   let firstCard = null;
   let secondCard = null;
@@ -131,7 +129,7 @@ const setup = () => {
   let timeLimit = 0;
   let pairsMatched = 0;
   let score = 0;
-  let intervalId; // Declare intervalId variable
+  let intervalId = null; // Declare intervalId variable
 
   // set difficulty level
   setDifficulty((updatedNumberOfPairs, updatedTimeLimit) => {
@@ -139,11 +137,6 @@ const setup = () => {
     timeLimit = updatedTimeLimit;
     console.log("Number of pairs in setup: ", numberOfPairs);
     console.log("Time limit in setup: ", timeLimit);
-  });
-
-  // reset game
-  $("#reset-button").on("click", function () {
-    location.reload();
   });
 
   const startGame = () => {
@@ -204,12 +197,22 @@ const setup = () => {
 
       // win condition
       if (pairsMatched === numberOfPairs) {
-        // stop timer
+        // stop timer here and stop timer in html
+        $("#timer").text("0:00");
         clearInterval(intervalId);
         $("#match-message").text("You Win!");
       }
     });
   };
+  clearInterval(intervalId);
+
+  // reset game
+  $("#reset_game").on("click", function () {
+    // redirect to home page
+    location.reload();
+  });
+
+
 
   // Add event listener to the start button
   $("#start-button").on("click", startGame);
