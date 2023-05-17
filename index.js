@@ -25,7 +25,9 @@ function powerUp(clickCount) {
   // Set a timeout to flip the cards back
   setTimeout(() => {
     unmatchedCards.toggleClass("flip");
-  }, 5000);
+  }, 1000);
+  // match message
+  $("#match-message").text("Power Up!");
 
 }
 }
@@ -144,6 +146,7 @@ async function generatePokemonCards(numPairs) {
     backFace.src = "back.webp";
     backFace.alt = "";
     backFace.style.background = "transparent";
+  
 
     card.appendChild(frontFace);
     card.appendChild(backFace);
