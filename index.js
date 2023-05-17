@@ -30,6 +30,7 @@ function setDifficulty(callback) {
   let timeLimit = 0;
 
   $("#level button").click(function () {
+        $("#level button").removeClass("active");
     const difficulty = $(this).val();
 
     if (difficulty === "easy") {
@@ -119,10 +120,6 @@ function shuffleArray(array) {
   }
 }
 
-
-// win game function
-
-
 const setup = () => {
   let firstCard = null;
   let secondCard = null;
@@ -133,65 +130,72 @@ const setup = () => {
   let pairsMatched = 0;
   let score = 0;
 
-// event listener for start button
-
   // set difficulty level
-setDifficulty((updatedNumberOfPairs, updatedTimeLimit) => {
-  numberOfPairs = updatedNumberOfPairs;
-  timeLimit = updatedTimeLimit;
-  console.log("Number of pairs in setup: ", numberOfPairs);
-  console.log("Time limit in setup: ", timeLimit);
-  generatePokemonCards(numberOfPairs);
-  startTimer(timeLimit);
-});
-
-
-  // game play event listener
-  $(document).on("click", ".card", function () {
-    //add click count
-    clickCount++;
-    // display click count
-    $("#clicks").text(clickCount);
-
-    if (isProcessing) {
-      return;
-    }
-
-    $(this).toggleClass("flip");
-
-    const currentCard = $(this).find(".front_face")[0];
-
-    if (!firstCard) {
-      firstCard = currentCard;
-    } else if (firstCard !== currentCard) {
-      secondCard = currentCard;
-      isProcessing = true;
-
-      if (firstCard.src === secondCard.src) {
-        console.log("match");
-        $("#match-message").text("Match!");
-        $(this).off("click");
-        $(firstCard).parent().off("click");
-        score += 10;
-        pairsMatched++;
-        isProcessing = false;
-        firstCard = null;
-        secondCard = null;
-      } else {
-        console.log("no match");
-        $("#match-message").text("No Match!");
-        setTimeout(() => {
-          if (firstCard && secondCard) {
-            $(this).toggleClass("flip");
-            $(firstCard).parent().toggleClass("flip");
-            isProcessing = false;
-            firstCard = null;
-            secondCard = null;
-          }
-        }, 1000);
-      }
-    }
+  setDifficulty((updatedNumberOfPairs, updatedTimeLimit) => {
+    numberOfPairs = updatedNumberOfPairs;
+    timeLimit = updatedTimeLimit;
+    console.log("Number of pairs in setup: ", numberOfPairs);
+    console.log("Time limit in setup: ", timeLimit);
   });
+
+  const startGame = () => {
+    // start game
+    generatePokemonCards(numberOfPairs);
+    startTimer(timeLimit);
+
+    // Remove the start button
+    $("#start-button").off("click").hide();
+
+    // game play event listener
+    $(document).on("click", ".card", function () {
+      //add click count
+      clickCount++;
+      // display click count
+      $("#clicks").text(clickCount);
+
+      if (isProcessing) {
+        return;
+      }
+
+      $(this).toggleClass("flip");
+
+      const currentCard = $(this).find(".front_face")[0];
+
+      if (!firstCard) {
+        firstCard = currentCard;
+      } else if (firstCard !== currentCard) {
+        secondCard = currentCard;
+        isProcessing = true;
+
+        if (firstCard.src === secondCard.src) {
+          console.log("match");
+          $("#match-message").text("Match!");
+          $(this).off("click");
+          $(firstCard).parent().off("click");
+          score += 10;
+          pairsMatched++;
+          isProcessing = false;
+          firstCard = null;
+          secondCard = null;
+        } else {
+          console.log("no match");
+          $("#match-message").text("No Match!");
+          setTimeout(() => {
+            if (firstCard && secondCard) {
+              $(this).toggleClass("flip");
+              $(firstCard).parent().toggleClass("flip");
+              isProcessing = false;
+              firstCard = null;
+              secondCard = null;
+            }
+          }, 1000);
+        }
+      }
+    });
+  };
+
+  // Add event listener to the start button
+  $("#start-button").on("click", startGame);
 };
 
 $(document).ready(setup);
