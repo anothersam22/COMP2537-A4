@@ -122,7 +122,6 @@ function shuffleArray(array) {
     [array[i], array[j]] = [array[j], array[i]];
   }
 }
-
 const setup = () => {
   let firstCard = null;
   let secondCard = null;
@@ -132,6 +131,7 @@ const setup = () => {
   let timeLimit = 0;
   let pairsMatched = 0;
   let score = 0;
+  let intervalId; // Declare intervalId variable
 
   // set difficulty level
   setDifficulty((updatedNumberOfPairs, updatedTimeLimit) => {
@@ -139,6 +139,11 @@ const setup = () => {
     timeLimit = updatedTimeLimit;
     console.log("Number of pairs in setup: ", numberOfPairs);
     console.log("Time limit in setup: ", timeLimit);
+  });
+
+  // reset game
+  $("#reset-button").on("click", function () {
+    location.reload();
   });
 
   const startGame = () => {
@@ -193,6 +198,15 @@ const setup = () => {
             }
           }, 1000);
         }
+      }
+      // update score
+      $("#score").text(score);
+
+      // win condition
+      if (pairsMatched === numberOfPairs) {
+        // stop timer
+        clearInterval(intervalId);
+        $("#match-message").text("You Win!");
       }
     });
   };
