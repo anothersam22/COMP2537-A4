@@ -23,6 +23,7 @@ body {
   transition: transform 1s;
   perspective: 1000px;
   transform-style: preserve-3d;
+  background: transparent;
   
 
   
@@ -37,6 +38,7 @@ img {
 .back_face {
   position: absolute;
   backface-visibility: hidden;
+  background: transparent;
 }
 
 

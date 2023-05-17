@@ -133,6 +133,7 @@ async function generatePokemonCards(numPairs) {
 
     const frontFace = document.createElement("img");
     frontFace.classList.add("front_face");
+    frontFace.style.background = "transparent";
     frontFace.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${
       pokemonList.indexOf(pokemon) + 1
     }.png`;
@@ -142,6 +143,7 @@ async function generatePokemonCards(numPairs) {
     backFace.classList.add("back_face");
     backFace.src = "back.webp";
     backFace.alt = "";
+    backFace.style.background = "transparent";
 
     card.appendChild(frontFace);
     card.appendChild(backFace);
@@ -267,13 +269,17 @@ const setup = () => {
   // Event listener for dark button
   $("#darkButton").click(function () {
     $("#game_grid").removeClass("light-bg").addClass("dark-bg");
-    $("#card").removeClass("light-bg").addClass("dark-bg");
+    $(".card").removeClass("light-bg").addClass("dark-bg");
+    $(".front_face").removeClass("light-bg").addClass("dark-bg");
+    $(".back_face").removeClass("light-bg").addClass("dark-bg");
   });
 
   // Event listener for light button
   $("#lightButton").click(function () {
     $("#game_grid").removeClass("dark-bg").addClass("light-bg");
-    $("#card").removeClass("dark-bg").addClass("light-bg");
+    $(".card").removeClass("dark-bg").addClass("light-bg");
+    $(".front_face").removeClass("dark-bg").addClass("light-bg");
+    $(".back_face").removeClass("dark-bg").addClass("light-bg");
   });
 
   // reset game
