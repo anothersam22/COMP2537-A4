@@ -1,6 +1,3 @@
-
-
-
 // power up function:  if you have clicked 10 times flip all cards for 5 seconds
 function powerUp(clickCount) {
   // Select all cards that are not matched
@@ -34,15 +31,18 @@ function startTimer(duration) {
       clearInterval(intervalId);
       $("#timer").text("0:00");
       $("#match-message").text("Game Over!");
+      console.log("Game Over! from timer function");
+      // Disable flipping cards
+      $(".card").off("click").removeClass("flip");
     }
   }, 1000);
-  return intervalId;
+  return timer;
 }
 
-// stop timer function
-function stopTimer(intervalId) {
-  clearInterval(intervalId);
-}
+// // stop timer function
+// function stopTimer(intervalId) {
+//   clearInterval(intervalId);
+// }
 
 // set difficulty level
 function setDifficulty(callback) {
@@ -55,13 +55,13 @@ function setDifficulty(callback) {
 
     if (difficulty === "easy") {
       numberOfPairs = 3;
-      timeLimit = 60;
+      timeLimit = 30;
     } else if (difficulty === "medium") {
       numberOfPairs = 6;
-      timeLimit = 90;
+      timeLimit = 60;
     } else if (difficulty === "hard") {
       numberOfPairs = 9;
-      timeLimit = 120;
+      timeLimit = 90;
     }
 
     // Log the updated values
@@ -78,9 +78,7 @@ function setDifficulty(callback) {
 
 // Generate cards for grid:
 async function generatePokemonCards(numPairs) {
-  const response = await fetch(
-    `https://pokeapi.co/api/v2/pokemon?limit=${numPairs}`
-  );
+  const response = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=810`);
   const data = await response.json();
   const pokemonList = data.results;
 
@@ -105,9 +103,9 @@ async function generatePokemonCards(numPairs) {
   const uniquePokemons = [];
 
   for (let i = 0; i < numPairs; i++) {
-    const pokemon1 = pokemonList[i];
-    const pokemon2 = pokemonList[numPairs - 1 - i];
-    uniquePokemons.push(pokemon1, pokemon2);
+    const randomIndex = Math.floor(Math.random() * pokemonList.length);
+    const randomPokemon = pokemonList[randomIndex];
+    uniquePokemons.push(randomPokemon, randomPokemon);
   }
 
   shuffleArray(uniquePokemons);
@@ -155,9 +153,10 @@ const setup = () => {
   let numberOfPairs = 3;
   let pairsMatched = 0;
   let pairsLeft = 0;
-  let timeLimit = 60;
+  let timeLimit = 30;
   let score = 0;
   let intervalId = "bubba"; // Declare intervalId variable
+  console.log("timeLimit before start game: ", timeLimit);
 
   // set difficulty level
   setDifficulty((updatedNumberOfPairs, updatedTimeLimit) => {
@@ -166,14 +165,27 @@ const setup = () => {
     console.log("Number of pairs in setup: ", numberOfPairs);
     console.log("Time limit in setup: ", timeLimit);
   });
+  console.log("timeLimit after setDifficulty: ", timeLimit);
 
   const startGame = () => {
     // start game
     generatePokemonCards(numberOfPairs);
     let timeCounter = startTimer(timeLimit);
+    console.log("timeCounter at start of game: ", timeCounter);
 
     // Remove the start button
     $("#start-button").off("click").hide();
+
+    // decrease timeCounter by 1 every second
+    intervalId = setInterval(() => {
+      timeCounter--;
+      console.log("timeCounter in interval: ", timeCounter);
+
+      if (timeCounter === 0) {
+        clearInterval(intervalId); // Stop the interval
+        // Perform any additional actions when timeCounter reaches 0
+      }
+    }, 1000);
 
     // game play event listener
     $(document).on("click", ".card", function () {
@@ -182,8 +194,15 @@ const setup = () => {
       // display click count
       $("#clicks").text(clickCount);
 
+      // timeCounter at each click
+      console.log("timeCounter at each click: ", timeCounter);
+
       // check if card is already flipped or matched
-      if ($(this).hasClass("flip") || $(this).hasClass("matched")) {
+      if (
+        $(this).hasClass("flip") ||
+        $(this).hasClass("matched") ||
+        timeCounter <= 0
+      ) {
         return; // Skip further execution
       }
 
@@ -200,6 +219,12 @@ const setup = () => {
       } else if (firstCard !== currentCard) {
         secondCard = currentCard;
         isProcessing = true;
+        // if time runs out, disable flipping cards
+        console.log("timeCounter: ", timeCounter);
+        if (timeCounter <= 0) {
+          console.log("disable cards after time runs out");
+          $(this).off("click");
+        }
 
         if (firstCard.src === secondCard.src) {
           console.log("match");
@@ -245,10 +270,11 @@ const setup = () => {
         // stop timer here and stop timer in html
         console.log("You win!");
         console.log("intervalID: ", intervalId);
-        //$("#timer").text("0:00");
+        // stop timer
         stopTimer(timeCounter);
-        // clearInterval(timeCounter);
-
+        // disable flipping cards
+        $(".card").off("click");
+        // display win message
         $("#match-message").text("You Win!");
       }
     });
@@ -264,7 +290,6 @@ const setup = () => {
     $(".back_face").css("background-color", "black");
     $(".card").css("background-color", "black");
     $(".img").css("background", "black");
-
   });
 
   // Event listener for light button
@@ -277,8 +302,6 @@ const setup = () => {
     $(".back_face").css("background-color", "white");
     $(".card").css("background-color", "white");
     $(".img").css("background", "white");
-
-
   });
 
   // reset game
