@@ -50,7 +50,7 @@ img {
   transform: rotateY(180deg);
 }
 
-/* Modal Styles */
+Modal Styles
 .modal {
   display: none;
   position: fixed;

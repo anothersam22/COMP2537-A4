@@ -30,6 +30,7 @@ function startTimer(duration) {
     }
 
     $("#timer").text(minutes + ":" + seconds);
+   
 
     if (--timer < 0) {
       timer = duration;
@@ -186,7 +187,7 @@ const setup = () => {
       timeCounter--;
       console.log("timeCounter in interval: ", timeCounter);
 
-      if (timeCounter === 0) {
+      if (timeCounter === 0 || pairsMatched === numberOfPairs) {
         clearInterval(intervalId); // Stop the interval
         // Perform any additional actions when timeCounter reaches 0
       }
@@ -270,14 +271,29 @@ const setup = () => {
       // display pairs matched
       $("#pairs-matched").text(pairsMatched);
 
-      // win condition
-      if (pairsMatched === numberOfPairs) {
-        console.log("You win!");
-        console.log("intervalID: ", intervalId);
-        $("#match-message").text("You Win!"); // display win message
-      }
+      // // win condition
+      // if (pairsMatched === numberOfPairs) {
+      //   console.log("You win!");
+      //   console.log("intervalID: ", intervalId);
+      //   $("#match-message").text("You Win!"); // display win message
+      //   // stop timer
+      //   clearInterval(intervalId);
+      //   // display intervalId in html
+      //   $("#timer").text(intervalId);
+      // }
     });
   };
+
+  // win condition
+  if (pairsMatched === numberOfPairs) {
+    console.log("You win!");
+    console.log("intervalID: ", intervalId);
+    $("#match-message").text("You Win!"); // display win message
+    // stop timer
+    clearInterval(intervalId);
+    // display intervalId in html
+    $("#timer").text(intervalId);
+  }
 
   // Event listener for dark button
   $("#darkButton").click(function () {
