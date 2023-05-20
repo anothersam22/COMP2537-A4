@@ -130,3 +130,9 @@ img {
   background-color: #f5f5f5;
   color: #333;
 }
+
+#level button,
+#theme button {
+  margin-right: 10px;
+  /* Adjust the spacing value as per your preference */
+}
