@@ -258,8 +258,10 @@ const setup = () => {
   $("#darkButton").click(function () {
     $("#game_grid").removeClass("light-bg").addClass("dark-bg");
     $(".card").removeClass("light-bg").addClass("dark-bg");
-    $(".front_face").removeClass("light-bg").addClass("dark-bg");
-    $(".back_face").removeClass("light-bg").addClass("dark-bg");
+    // $(".front_face").removeClass("light-bg").addClass("dark-bg");
+    // $(".back_face").removeClass("light-bg").addClass("dark-bg");
+    $(".front_face").css("background-color", "black");
+    $(".back_face").css("background-color", "black");
     $(".card").css("background-color", "black");
     $(".img").css("background", "black");
 
@@ -269,8 +271,10 @@ const setup = () => {
   $("#lightButton").click(function () {
     $("#game_grid").removeClass("dark-bg").addClass("light-bg");
     $(".card").removeClass("dark-bg").addClass("light-bg");
-    $(".front_face").removeClass("dark-bg").addClass("light-bg");
-    $(".back_face").removeClass("dark-bg").addClass("light-bg");
+    $(".front_face").css("background-color", "white");
+    $(".back_face").css("background-color", "white");
+    // $(".front_face").removeClass("dark-bg").addClass("light-bg");
+    // $(".back_face").removeClass("dark-bg").addClass("light-bg");
     $(".card").css("background-color", "white");
     $(".img").css("background", "white");
 
