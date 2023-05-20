@@ -1,16 +1,5 @@
 
-// // power up function:  if you have clicked 10 times flip all cards for 5 seconds
-// function powerUp(clickCount) {
-//   // if click count is 10
-//   if (clickCount === 10) {
-//     // flip all cards that are not matched
-//     $(".card").not(".matched").toggleClass("flip");
-//     // set timeout to flip cards back
-//     setTimeout(() => {
-//       $(".card").not(".matched").toggleClass("flip");
-//     }, 5000);
-//   }
-// }
+
 
 // power up function:  if you have clicked 10 times flip all cards for 5 seconds
 function powerUp(clickCount) {
@@ -18,24 +7,23 @@ function powerUp(clickCount) {
   const unmatchedCards = $(".card").not(".matched");
 
   if (clickCount == 10) {
-
-  // Flip all unmatched cards
-  unmatchedCards.toggleClass("flip");
-
-  // Set a timeout to flip the cards back
-  setTimeout(() => {
+    // Flip all unmatched cards
     unmatchedCards.toggleClass("flip");
-  }, 1000);
-  // match message
-  $("#match-message").text("Power Up!");
 
+    // Set a timeout to flip the cards back
+    setTimeout(() => {
+      unmatchedCards.toggleClass("flip");
+    }, 1000);
+    // match message
+    $("#match-message").text("Power Up!");
+  }
 }
-}
-
 
 // time limit function
 function startTimer(duration) {
-  let timer = duration, minutes, seconds;
+  let timer = duration,
+    minutes,
+    seconds;
   const intervalId = setInterval(function () {
     minutes = parseInt(timer / 60, 10);
     seconds = parseInt(timer % 60, 10);
@@ -47,18 +35,14 @@ function startTimer(duration) {
       $("#timer").text("0:00");
       $("#match-message").text("Game Over!");
     }
-    
   }, 1000);
   return intervalId;
-  
-
 }
 
 // stop timer function
 function stopTimer(intervalId) {
   clearInterval(intervalId);
 }
-
 
 // set difficulty level
 function setDifficulty(callback) {
@@ -91,7 +75,6 @@ function setDifficulty(callback) {
     callback(numberOfPairs, timeLimit);
   });
 }
-
 
 // Generate cards for grid:
 async function generatePokemonCards(numPairs) {
@@ -133,10 +116,13 @@ async function generatePokemonCards(numPairs) {
     const card = document.createElement("div");
     card.classList.add("card");
 
+    const randomIndex = Math.floor(Math.random() * pokemonList.length);
+    const randomPokemon = pokemonList[randomIndex];
+
     const frontFace = document.createElement("img");
     frontFace.classList.add("front_face");
-    frontFace.style.background = "transparent";
-    frontFace.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${
+    frontFace.style.background = "white";
+    frontFace.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${
       pokemonList.indexOf(pokemon) + 1
     }.png`;
     frontFace.alt = "";
@@ -145,8 +131,7 @@ async function generatePokemonCards(numPairs) {
     backFace.classList.add("back_face");
     backFace.src = "back.webp";
     backFace.alt = "";
-    backFace.style.background = "transparent";
-  
+    backFace.style.background = "white";
 
     card.appendChild(frontFace);
     card.appendChild(backFace);
@@ -275,6 +260,9 @@ const setup = () => {
     $(".card").removeClass("light-bg").addClass("dark-bg");
     $(".front_face").removeClass("light-bg").addClass("dark-bg");
     $(".back_face").removeClass("light-bg").addClass("dark-bg");
+    $(".card").css("background-color", "black");
+    $(".img").css("background", "black");
+
   });
 
   // Event listener for light button
@@ -283,6 +271,10 @@ const setup = () => {
     $(".card").removeClass("dark-bg").addClass("light-bg");
     $(".front_face").removeClass("dark-bg").addClass("light-bg");
     $(".back_face").removeClass("dark-bg").addClass("light-bg");
+    $(".card").css("background-color", "white");
+    $(".img").css("background", "white");
+
+
   });
 
   // reset game

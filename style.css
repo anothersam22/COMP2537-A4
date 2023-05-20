@@ -23,15 +23,15 @@ body {
   transition: transform 1s;
   perspective: 1000px;
   transform-style: preserve-3d;
-  background: transparent;
+  
   
 
   
 }
 
-
 img {
-  width: 100%
+  width: 100%;
+  background: transparent;
 }
 
 .front_face,
