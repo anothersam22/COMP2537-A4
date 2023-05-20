@@ -24,6 +24,11 @@ function startTimer(duration) {
   const intervalId = setInterval(function () {
     minutes = parseInt(timer / 60, 10);
     seconds = parseInt(timer % 60, 10);
+    // Add leading zero if seconds is less than 10
+    if (seconds < 10) {
+      seconds = "0" + seconds;
+    }
+
     $("#timer").text(minutes + ":" + seconds);
 
     if (--timer < 0) {
@@ -267,23 +272,15 @@ const setup = () => {
 
       // win condition
       if (pairsMatched === numberOfPairs) {
-        // stop timer here and stop timer in html
         console.log("You win!");
         console.log("intervalID: ", intervalId);
-        // stop timer
-        stopTimer(timeCounter);
-        // disable flipping cards
-        $(".card").off("click");
-        // display win message
-        $("#match-message").text("You Win!");
+        $("#match-message").text("You Win!"); // display win message
       }
     });
   };
 
   // Event listener for dark button
   $("#darkButton").click(function () {
-    // $("#game_grid").removeClass("light-bg").addClass("dark-bg");
-    // $(".card").removeClass("light-bg").addClass("dark-bg");
     $("#game_grid").css("background-color", "black");
     $(".card").css("background-color", "black");
     $(".front_face").css("background-color", "black");
@@ -294,8 +291,6 @@ const setup = () => {
 
   // Event listener for light button
   $("#lightButton").click(function () {
-    // $("#game_grid").removeClass("dark-bg").addClass("light-bg");
-    // $(".card").removeClass("dark-bg").addClass("light-bg");
     $("#game_grid").css("background-color", "white");
     $(".card").css("background-color", "white");
     $(".front_face").css("background-color", "white");
