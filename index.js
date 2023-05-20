@@ -256,10 +256,10 @@ const setup = () => {
 
   // Event listener for dark button
   $("#darkButton").click(function () {
-    $("#game_grid").removeClass("light-bg").addClass("dark-bg");
-    $(".card").removeClass("light-bg").addClass("dark-bg");
-    // $(".front_face").removeClass("light-bg").addClass("dark-bg");
-    // $(".back_face").removeClass("light-bg").addClass("dark-bg");
+    // $("#game_grid").removeClass("light-bg").addClass("dark-bg");
+    // $(".card").removeClass("light-bg").addClass("dark-bg");
+    $("#game_grid").css("background-color", "black");
+    $(".card").css("background-color", "black");
     $(".front_face").css("background-color", "black");
     $(".back_face").css("background-color", "black");
     $(".card").css("background-color", "black");
@@ -269,12 +269,12 @@ const setup = () => {
 
   // Event listener for light button
   $("#lightButton").click(function () {
-    $("#game_grid").removeClass("dark-bg").addClass("light-bg");
-    $(".card").removeClass("dark-bg").addClass("light-bg");
+    // $("#game_grid").removeClass("dark-bg").addClass("light-bg");
+    // $(".card").removeClass("dark-bg").addClass("light-bg");
+    $("#game_grid").css("background-color", "white");
+    $(".card").css("background-color", "white");
     $(".front_face").css("background-color", "white");
     $(".back_face").css("background-color", "white");
-    // $(".front_face").removeClass("dark-bg").addClass("light-bg");
-    // $(".back_face").removeClass("dark-bg").addClass("light-bg");
     $(".card").css("background-color", "white");
     $(".img").css("background", "white");
 
