@@ -1,3 +1,9 @@
+/*
+Pokemon Memory Game 
+Assignment 4
+COMP 2537
+*/
+
 // power up function:  if you have clicked 10 times flip all cards for N seconds
 function powerUp(clickCount) {
   // Select all cards that are not matched
@@ -15,8 +21,6 @@ function powerUp(clickCount) {
     $("#match-message").text("Power Up!");
   }
 }
-
-
 
 // set difficulty level
 function setDifficulty(callback) {
@@ -39,7 +43,6 @@ function setDifficulty(callback) {
       numberOfPairs = 9;
       timeLimit = 90;
       $("#levelState").text("Hard");
-
     }
 
     // Log the updated values
@@ -118,17 +121,17 @@ async function generatePokemonCards(numPairs) {
     const backgroundColor = getComputedStyle(gameGrid).backgroundColor;
     const isDarkModeEnabled = backgroundColor === "rgb(0, 0, 0)"; // Check if background color is black
 
- if (isDarkModeEnabled) {
-   const cards = document.querySelectorAll(".card");
-   cards.forEach((card) => {
-     card.style.background = "black";
-     const images = card.querySelectorAll("img");
-     images.forEach((image) => {
-       image.style.background = "black";
-     });
-   });
- }
-
+    // Check if dark mode is enabled
+    if (isDarkModeEnabled) {
+      const cards = document.querySelectorAll(".card");
+      cards.forEach((card) => {
+        card.style.background = "black";
+        const images = card.querySelectorAll("img");
+        images.forEach((image) => {
+          image.style.background = "black";
+        });
+      });
+    }
   });
 }
 
@@ -163,7 +166,6 @@ const setup = () => {
   console.log("timeLimit after setDifficulty: ", timeLimit);
 
   const startGame = () => {
-
     // generate cards
     generatePokemonCards(numberOfPairs);
     let timeCounter = timeLimit;
@@ -185,13 +187,11 @@ const setup = () => {
       }
       $("#timer").text(minutes + " min :" + seconds + " sec");
 
-
       if (timeCounter === 0) {
         clearInterval(intervalId); // Stop the interval
         // Perform any additional actions when timeCounter reaches 0
       }
     }, 1000);
-
 
     // game play event listener
     $(document).on("click", ".card", function () {
@@ -261,9 +261,6 @@ const setup = () => {
         }
       }
 
-  
-
-
       // power up function
       powerUp(clickCount);
 
@@ -289,13 +286,9 @@ const setup = () => {
         }
         $("#timer").text(minutes + " min :" + seconds + " sec");
 
-
         //$("#timer").text(timeCounter);
         console.log("timecounter after win: ", timeCounter);
-
       }
-
-      
     });
   };
 
