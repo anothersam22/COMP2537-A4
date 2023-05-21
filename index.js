@@ -9,7 +9,7 @@ function powerUp(clickCount) {
   // Select all cards that are not matched
   const unmatchedCards = $(".card").not(".matched");
 
-  if (clickCount == 10) {
+  if (clickCount == 10 || clickCount == 30 || clickCount == 60) {
     // Flip all unmatched cards
     unmatchedCards.toggleClass("flip");
 
@@ -19,6 +19,7 @@ function powerUp(clickCount) {
     }, 1000);
     // match message
     $("#match-message").text("Power Up!");
+    console.log("Power Up!");
   }
 }
 
@@ -154,7 +155,7 @@ const setup = () => {
   let timeLimit = 30;
   let score = 0;
   let intervalId = "bubba"; // Declare intervalId variable
-  console.log("timeLimit before start game: ", timeLimit);
+ // console.log("timeLimit before start game: ", timeLimit);
 
   // set difficulty level
   setDifficulty((updatedNumberOfPairs, updatedTimeLimit) => {
@@ -163,13 +164,13 @@ const setup = () => {
     console.log("Number of pairs in setup: ", numberOfPairs);
     console.log("Time limit in setup: ", timeLimit);
   });
-  console.log("timeLimit after setDifficulty: ", timeLimit);
+  // console.log("timeLimit after setDifficulty: ", timeLimit);
 
   const startGame = () => {
     // generate cards
     generatePokemonCards(numberOfPairs);
     let timeCounter = timeLimit;
-    console.log("timeCounter at start of game: ", timeCounter);
+    //console.log("timeCounter at start of game: ", timeCounter);
 
     // Remove the start button
     $("#start-button").off("click").hide();
@@ -321,5 +322,6 @@ const setup = () => {
   // Add event listener to the start button
   $("#start-button").on("click", startGame);
 };
+
 
 $(document).ready(setup);
