@@ -1,4 +1,4 @@
-// power up function:  if you have clicked 10 times flip all cards for 5 seconds
+// power up function:  if you have clicked 10 times flip all cards for N seconds
 function powerUp(clickCount) {
   // Select all cards that are not matched
   const unmatchedCards = $(".card").not(".matched");
@@ -174,7 +174,8 @@ const setup = () => {
 
     // start game
     generatePokemonCards(numberOfPairs);
-    let timeCounter = startTimer(timeLimit);
+    // let timeCounter = startTimer(timeLimit);
+    let timeCounter = timeLimit;
     console.log("timeCounter at start of game: ", timeCounter);
 
     // Remove the start button
@@ -279,8 +280,17 @@ const setup = () => {
         console.log("intervalID at win condition before clear: ", intervalId);
         $("#match-message").text("You Win!"); // display win message
         clearInterval(intervalId);
-        // display timeCounter
-        $("#timer").text(timeCounter);
+        // display timeCounter in 0:00 format
+        let minutes = parseInt(timeCounter / 60, 10);
+        let seconds = parseInt(timeCounter % 60, 10);
+        // Add leading zero if seconds is less than 10
+        if (seconds < 10) {
+          seconds = "0" + seconds;
+        }
+        $("#timer").text(minutes + ":" + seconds);
+        
+
+        //$("#timer").text(timeCounter);
         console.log("timecounter after win: ", timeCounter);
 
       }
