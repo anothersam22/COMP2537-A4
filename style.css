@@ -17,6 +17,7 @@ body {
   grid-auto-rows: repeat(auto, minmax(150px, auto));
   gap: 10px;
   justify-items: center;
+  padding-bottom: 20px;
       
 }
 
@@ -24,10 +25,12 @@ body {
 .card {
   width: 100%;
   position: relative;
+  position: center;
   transition: transform 1s;
   perspective: 1000px;
   transform-style: preserve-3d;
   margin-top: 20px;
+  border: transparent;
   
 }
 

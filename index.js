@@ -100,16 +100,39 @@ async function generatePokemonCards(numPairs) {
     numRows = Math.ceil(numPairs / 3);
     numColumns = 3;
   }
-
+  // make grid according to number of columns
   cardContainer.style.gridTemplateColumns = `repeat(${numColumns}, 1fr)`; // Update the grid template columns in CSS
 
-  const uniquePokemons = [];
+  // condition to change dimension of game grid depending on numColumns
+  if (numColumns === 3) {
+    cardContainer.style.minHeight = "300px";
+    cardContainer.style.maxWidth = "400px";
+    // change card width to 80%
+    const cards = document.querySelectorAll(".card");
+    cards.forEach((card) => {
+      card.style.width = "50%";
+    });
 
-  for (let i = 0; i < numPairs; i++) {
-    const randomIndex = Math.floor(Math.random() * pokemonList.length);
-    const randomPokemon = pokemonList[randomIndex];
-    uniquePokemons.push(randomPokemon, randomPokemon);
+  } else if (numColumns === 4) {
+    cardContainer.style.minHeight = "1000px";
+  } else if (numColumns === 6) {
+    cardContainer.style.minHeight = "700px";
   }
+
+  // make sure there are no duplicate pokemon pairs
+  const uniquePokemons = [];
+  const usedIndices = [];
+
+  while (uniquePokemons.length < numPairs * 2) {
+    const randomIndex = Math.floor(Math.random() * pokemonList.length);
+
+    if (!usedIndices.includes(randomIndex)) {
+      const randomPokemon = pokemonList[randomIndex];
+      uniquePokemons.push(randomPokemon, randomPokemon);
+      usedIndices.push(randomIndex);
+    }
+  }
+
 
   shuffleArray(uniquePokemons);
 
@@ -175,7 +198,7 @@ const setup = () => {
   let pairsLeft = 0;
   let timeLimit = 30;
   let score = 0;
-  let intervalId = "bubba"; // Declare intervalId variable
+  let intervalId; // Declare intervalId variable
   // console.log("timeLimit before start game: ", timeLimit);
 
   // set difficulty level
