@@ -4,6 +4,17 @@ Assignment 4
 COMP 2537
 */
 
+// time formatter function (location must be string id of html element in quotes)
+function displayTimeLimit(timeLimit, location) {
+  let minutes = parseInt(timeLimit / 60, 10);
+  let seconds = parseInt(timeLimit % 60, 10);
+
+  if (seconds < 10) {
+    seconds = "0" + seconds;
+  }
+
+  $(location).text(minutes + "min : " + seconds + "sec");
+}
 // power up function:  if you have clicked 10 times flip all cards for N seconds
 function powerUp(clickCount) {
   // Select all cards that are not matched
@@ -35,15 +46,21 @@ function setDifficulty(callback) {
     if (difficulty === "easy") {
       numberOfPairs = 3;
       timeLimit = 30;
+      displayTimeLimit(timeLimit, "#timer");
       $("#levelState").text("Easy");
+      $("#pairs-left").text(numberOfPairs);
     } else if (difficulty === "medium") {
       numberOfPairs = 6;
       timeLimit = 60;
+      displayTimeLimit(timeLimit, "#timer");
       $("#levelState").text("Medium");
+      $("#pairs-left").text(numberOfPairs);
     } else if (difficulty === "hard") {
       numberOfPairs = 9;
       timeLimit = 90;
+      displayTimeLimit(timeLimit, "#timer");
       $("#levelState").text("Hard");
+      $("#pairs-left").text(numberOfPairs);
     }
 
     // Log the updated values
@@ -155,7 +172,7 @@ const setup = () => {
   let timeLimit = 30;
   let score = 0;
   let intervalId = "bubba"; // Declare intervalId variable
- // console.log("timeLimit before start game: ", timeLimit);
+  // console.log("timeLimit before start game: ", timeLimit);
 
   // set difficulty level
   setDifficulty((updatedNumberOfPairs, updatedTimeLimit) => {
@@ -163,6 +180,7 @@ const setup = () => {
     timeLimit = updatedTimeLimit;
     console.log("Number of pairs in setup: ", numberOfPairs);
     console.log("Time limit in setup: ", timeLimit);
+    pairsLeft = updatedNumberOfPairs;
   });
   // console.log("timeLimit after setDifficulty: ", timeLimit);
 
@@ -178,15 +196,10 @@ const setup = () => {
     // decrease timeCounter by 1 every second
     intervalId = setInterval(() => {
       timeCounter--;
-      console.log("timeCounter in interval: ", timeCounter);
+      // console.log("timeCounter in interval: ", timeCounter);
+
       // display timeCounter in 0:00 format
-      let minutes = parseInt(timeCounter / 60, 10);
-      let seconds = parseInt(timeCounter % 60, 10);
-      // Add leading zero if seconds is less than 10
-      if (seconds < 10) {
-        seconds = "0" + seconds;
-      }
-      $("#timer").text(minutes + " min :" + seconds + " sec");
+      displayTimeLimit(timeCounter, "#timer");
 
       if (timeCounter === 0) {
         clearInterval(intervalId); // Stop the interval
@@ -241,6 +254,7 @@ const setup = () => {
           score += 10;
           pairsMatched++;
           pairsLeft = numberOfPairs - pairsMatched;
+          console.log("pairsLeft: ", pairsLeft);
           isProcessing = false;
           firstCard = null;
           secondCard = null;
@@ -275,20 +289,11 @@ const setup = () => {
       // win condition
       if (pairsMatched === numberOfPairs) {
         console.log("You win! from after end of start game");
-        console.log("intervalID at win condition before clear: ", intervalId);
         $("#match-message").text("You Win!"); // display win message
         clearInterval(intervalId);
-        // display timeCounter in 0:00 format
-        let minutes = parseInt(timeCounter / 60, 10);
-        let seconds = parseInt(timeCounter % 60, 10);
-        // Add leading zero if seconds is less than 10
-        if (seconds < 10) {
-          seconds = "0" + seconds;
-        }
-        $("#timer").text(minutes + " min :" + seconds + " sec");
 
-        //$("#timer").text(timeCounter);
-        console.log("timecounter after win: ", timeCounter);
+        // display timeCounter in 0:00 format
+        displayTimeLimit(timeCounter, "#timer");
       }
     });
   };
@@ -322,6 +327,5 @@ const setup = () => {
   // Add event listener to the start button
   $("#start-button").on("click", startGame);
 };
-
 
 $(document).ready(setup);
