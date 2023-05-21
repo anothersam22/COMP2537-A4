@@ -267,7 +267,7 @@ const setup = () => {
         if (seconds < 10) {
           seconds = "0" + seconds;
         }
-        $("#timer").text(minutes + ":" + seconds);
+        $("#timer").text(minutes + " min :" + seconds + " sec");
 
 
         //$("#timer").text(timeCounter);
