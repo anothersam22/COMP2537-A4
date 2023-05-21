@@ -112,6 +112,23 @@ async function generatePokemonCards(numPairs) {
     card.appendChild(frontFace);
     card.appendChild(backFace);
     cardContainer.appendChild(card);
+
+    // Detect if dark mode is enabled
+    const gameGrid = document.getElementById("game_grid");
+    const backgroundColor = getComputedStyle(gameGrid).backgroundColor;
+    const isDarkModeEnabled = backgroundColor === "rgb(0, 0, 0)"; // Check if background color is black
+
+ if (isDarkModeEnabled) {
+   const cards = document.querySelectorAll(".card");
+   cards.forEach((card) => {
+     card.style.background = "black";
+     const images = card.querySelectorAll("img");
+     images.forEach((image) => {
+       image.style.background = "black";
+     });
+   });
+ }
+
   });
 }
 
@@ -147,9 +164,8 @@ const setup = () => {
 
   const startGame = () => {
 
-    // start game
+    // generate cards
     generatePokemonCards(numberOfPairs);
-    // let timeCounter = startTimer(timeLimit);
     let timeCounter = timeLimit;
     console.log("timeCounter at start of game: ", timeCounter);
 
