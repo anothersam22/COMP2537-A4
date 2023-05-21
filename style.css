@@ -5,10 +5,11 @@ body {
 #game_grid {
   border: 2px tomato solid;
   width: fit-content;
-  /* width: auto; */
+  width: auto;
   min-width: 400px;
   height: fit-content;
-  min-height: 300px;
+  height: auto;
+  min-height: 1000px;
   margin: 10px auto 20px;
   /* margin-top: 20px; //Add the desired margin value */
   display: grid;
@@ -21,7 +22,7 @@ body {
 
 
 .card {
-  width: 80%;
+  width: 100%;
   position: relative;
   transition: transform 1s;
   perspective: 1000px;

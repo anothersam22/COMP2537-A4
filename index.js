@@ -208,7 +208,7 @@ const setup = () => {
       if (timeCounter === 0) {
         clearInterval(intervalId); // Stop the interval
         // Perform any additional actions when timeCounter reaches 0
-        console.log("You lose! from after end of start game");
+        console.log("Game Over! Time is up!");
         $("#match-message").text("Game Over!"); // display lose message
       }
     }, 1000);
