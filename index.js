@@ -50,13 +50,13 @@ function setDifficulty(callback) {
       $("#levelState").text("Easy");
       $("#pairs-left").text(numberOfPairs);
     } else if (difficulty === "medium") {
-      numberOfPairs = 6;
+      numberOfPairs = 8;
       timeLimit = 60;
       displayTimeLimit(timeLimit, "#timer");
       $("#levelState").text("Medium");
       $("#pairs-left").text(numberOfPairs);
     } else if (difficulty === "hard") {
-      numberOfPairs = 9;
+      numberOfPairs = 12;
       timeLimit = 90;
       displayTimeLimit(timeLimit, "#timer");
       $("#levelState").text("Hard");
@@ -86,13 +86,17 @@ async function generatePokemonCards(numPairs) {
 
   let numRows, numColumns;
 
-  if (numPairs % 4 === 0) {
-    numRows = numPairs / 4;
-    numColumns = 4;
-  } else if (numPairs % 3 === 0) {
-    numRows = numPairs / 3;
+  if (numPairs === 3) {
+    numRows = 2;
     numColumns = 3;
+  } else if (numPairs === 8) {
+    numRows = 4;
+    numColumns = 4;
+  } else if (numPairs === 12) {
+    numRows = 4;
+    numColumns = 6;
   } else {
+    // Default to a grid with 3 columns and ceil(numPairs/3) rows
     numRows = Math.ceil(numPairs / 3);
     numColumns = 3;
   }
@@ -204,6 +208,8 @@ const setup = () => {
       if (timeCounter === 0) {
         clearInterval(intervalId); // Stop the interval
         // Perform any additional actions when timeCounter reaches 0
+        console.log("You lose! from after end of start game");
+        $("#match-message").text("Game Over!"); // display lose message
       }
     }, 1000);
 
