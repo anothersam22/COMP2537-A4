@@ -30,8 +30,8 @@ function startTimer(duration) {
     }
 
     $("#timer").text(minutes + ":" + seconds);
-   
 
+ 
     if (--timer < 0) {
       timer = duration;
       clearInterval(intervalId);
@@ -45,10 +45,7 @@ function startTimer(duration) {
   return timer;
 }
 
-// // stop timer function
-// function stopTimer(intervalId) {
-//   clearInterval(intervalId);
-// }
+
 
 // set difficulty level
 function setDifficulty(callback) {
@@ -174,6 +171,7 @@ const setup = () => {
   console.log("timeLimit after setDifficulty: ", timeLimit);
 
   const startGame = () => {
+
     // start game
     generatePokemonCards(numberOfPairs);
     let timeCounter = startTimer(timeLimit);
@@ -187,11 +185,12 @@ const setup = () => {
       timeCounter--;
       console.log("timeCounter in interval: ", timeCounter);
 
-      if (timeCounter === 0 || pairsMatched === numberOfPairs) {
+      if (timeCounter === 0) {
         clearInterval(intervalId); // Stop the interval
         // Perform any additional actions when timeCounter reaches 0
       }
     }, 1000);
+
 
     // game play event listener
     $(document).on("click", ".card", function () {
@@ -261,6 +260,9 @@ const setup = () => {
         }
       }
 
+  
+
+
       // power up function
       powerUp(clickCount);
 
@@ -271,29 +273,21 @@ const setup = () => {
       // display pairs matched
       $("#pairs-matched").text(pairsMatched);
 
-      // // win condition
-      // if (pairsMatched === numberOfPairs) {
-      //   console.log("You win!");
-      //   console.log("intervalID: ", intervalId);
-      //   $("#match-message").text("You Win!"); // display win message
-      //   // stop timer
-      //   clearInterval(intervalId);
-      //   // display intervalId in html
-      //   $("#timer").text(intervalId);
-      // }
+      // win condition
+      if (pairsMatched === numberOfPairs) {
+        console.log("You win! from after end of start game");
+        console.log("intervalID at win condition before clear: ", intervalId);
+        $("#match-message").text("You Win!"); // display win message
+        clearInterval(intervalId);
+        // display timeCounter
+        $("#timer").text(timeCounter);
+        console.log("timecounter after win: ", timeCounter);
+
+      }
+
+      
     });
   };
-
-  // win condition
-  if (pairsMatched === numberOfPairs) {
-    console.log("You win!");
-    console.log("intervalID: ", intervalId);
-    $("#match-message").text("You Win!"); // display win message
-    // stop timer
-    clearInterval(intervalId);
-    // display intervalId in html
-    $("#timer").text(intervalId);
-  }
 
   // Event listener for dark button
   $("#darkButton").click(function () {
