@@ -16,35 +16,6 @@ function powerUp(clickCount) {
   }
 }
 
-// time limit function
-function startTimer(duration) {
-  let timer = duration,
-    minutes,
-    seconds;
-  const intervalId = setInterval(function () {
-    minutes = parseInt(timer / 60, 10);
-    seconds = parseInt(timer % 60, 10);
-    // Add leading zero if seconds is less than 10
-    if (seconds < 10) {
-      seconds = "0" + seconds;
-    }
-
-    $("#timer").text(minutes + ":" + seconds);
-
- 
-    if (--timer < 0) {
-      timer = duration;
-      clearInterval(intervalId);
-      $("#timer").text("0:00");
-      $("#match-message").text("Game Over!");
-      console.log("Game Over! from timer function");
-      // Disable flipping cards
-      $(".card").off("click").removeClass("flip");
-    }
-  }, 1000);
-  return timer;
-}
-
 
 
 // set difficulty level
@@ -185,6 +156,15 @@ const setup = () => {
     intervalId = setInterval(() => {
       timeCounter--;
       console.log("timeCounter in interval: ", timeCounter);
+      // display timeCounter in 0:00 format
+      let minutes = parseInt(timeCounter / 60, 10);
+      let seconds = parseInt(timeCounter % 60, 10);
+      // Add leading zero if seconds is less than 10
+      if (seconds < 10) {
+        seconds = "0" + seconds;
+      }
+      $("#timer").text(minutes + " min :" + seconds + " sec");
+
 
       if (timeCounter === 0) {
         clearInterval(intervalId); // Stop the interval
@@ -288,7 +268,7 @@ const setup = () => {
           seconds = "0" + seconds;
         }
         $("#timer").text(minutes + ":" + seconds);
-        
+
 
         //$("#timer").text(timeCounter);
         console.log("timecounter after win: ", timeCounter);
