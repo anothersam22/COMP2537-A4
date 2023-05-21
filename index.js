@@ -250,6 +250,9 @@ const setup = () => {
       // display click count
       $("#clicks").text(clickCount);
 
+      // power up function
+      powerUp(clickCount);
+
       // timeCounter at each click
       console.log("timeCounter at each click: ", timeCounter);
 
@@ -287,6 +290,7 @@ const setup = () => {
           $("#match-message").text("Match!");
           $(this).off("click");
           $(firstCard).parent().off("click");
+          powerUp(clickCount);
           score += 10;
           pairsMatched++;
           pairsLeft = numberOfPairs - pairsMatched;
@@ -304,6 +308,7 @@ const setup = () => {
             if (firstCard && secondCard) {
               $(this).toggleClass("flip");
               $(firstCard).parent().toggleClass("flip");
+              powerUp(clickCount);
               isProcessing = false;
               firstCard = null;
               secondCard = null;
@@ -311,9 +316,6 @@ const setup = () => {
           }, 1000);
         }
       }
-
-      // power up function
-      powerUp(clickCount);
 
       // update score
       $("#score").text(score);
