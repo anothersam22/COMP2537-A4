@@ -30,12 +30,16 @@ function setDifficulty(callback) {
     if (difficulty === "easy") {
       numberOfPairs = 3;
       timeLimit = 30;
+      $("#levelState").text("Easy");
     } else if (difficulty === "medium") {
       numberOfPairs = 6;
       timeLimit = 60;
+      $("#levelState").text("Medium");
     } else if (difficulty === "hard") {
       numberOfPairs = 9;
       timeLimit = 90;
+      $("#levelState").text("Hard");
+
     }
 
     // Log the updated values
