@@ -103,20 +103,31 @@ async function generatePokemonCards(numPairs) {
   // make grid according to number of columns
   cardContainer.style.gridTemplateColumns = `repeat(${numColumns}, 1fr)`; // Update the grid template columns in CSS
 
+
   // condition to change dimension of game grid depending on numColumns
+  const cards = document.querySelectorAll(".card");
+
   if (numColumns === 3) {
     cardContainer.style.minHeight = "300px";
     cardContainer.style.maxWidth = "400px";
     // change card width to 80%
-    const cards = document.querySelectorAll(".card");
     cards.forEach((card) => {
       card.style.width = "50%";
     });
 
   } else if (numColumns === 4) {
-    cardContainer.style.minHeight = "1000px";
-  } else if (numColumns === 6) {
     cardContainer.style.minHeight = "700px";
+    cardContainer.style.maxWidth = "600px";
+    cards.forEach((card) => {
+      card.style.width = "50%";
+    });
+
+  } else if (numColumns === 6) {
+    cardContainer.style.minHeight = "600px";
+    cardContainer.style.maxWidth = "800px";
+    cards.forEach((card) => {
+      card.style.width = "50%";
+    });
   }
 
   // make sure there are no duplicate pokemon pairs
