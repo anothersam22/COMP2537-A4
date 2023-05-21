@@ -103,7 +103,6 @@ async function generatePokemonCards(numPairs) {
   // make grid according to number of columns
   cardContainer.style.gridTemplateColumns = `repeat(${numColumns}, 1fr)`; // Update the grid template columns in CSS
 
-
   // condition to change dimension of game grid depending on numColumns
   const cards = document.querySelectorAll(".card");
 
@@ -114,14 +113,12 @@ async function generatePokemonCards(numPairs) {
     cards.forEach((card) => {
       card.style.width = "50%";
     });
-
   } else if (numColumns === 4) {
     cardContainer.style.minHeight = "700px";
     cardContainer.style.maxWidth = "600px";
     cards.forEach((card) => {
       card.style.width = "50%";
     });
-
   } else if (numColumns === 6) {
     cardContainer.style.minHeight = "600px";
     cardContainer.style.maxWidth = "800px";
@@ -143,7 +140,6 @@ async function generatePokemonCards(numPairs) {
       usedIndices.push(randomIndex);
     }
   }
-
 
   shuffleArray(uniquePokemons);
 
@@ -328,7 +324,7 @@ const setup = () => {
 
       // win condition
       if (pairsMatched === numberOfPairs) {
-        console.log("You win! from after end of start game");
+        console.log("You win!");
         $("#match-message").text("You Win!"); // display win message
         clearInterval(intervalId);
 
